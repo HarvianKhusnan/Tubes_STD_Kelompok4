@@ -42,7 +42,7 @@ struct elmPeserta{
 };
 
 struct events{
-    adr_event first;
+    adr_event first, last;
 };
 
 struct participants{
