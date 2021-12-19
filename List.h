@@ -5,6 +5,11 @@
 
 using namespace std;
 
+#define info(P) (P)->info
+#define next(P) (P)->next
+#define first(H) ((H).first)
+#define last(H) ((H).last)
+
 typedef struct event *adr_event;
 typedef struct peserta *adr_peserta;
 

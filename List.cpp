@@ -11,3 +11,7 @@ void showMenu() {
     cout << SHOW_PARTICIPANT << ". Tampilkan peserta dari sebuah event" << endl;
     cout << EXIT << ". Keluar" << endl;
 }
+
+void createEvents(events &events) {
+
+}
