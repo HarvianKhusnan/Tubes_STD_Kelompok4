@@ -7,11 +7,13 @@ using namespace std;
 
 #define info(P) (P)->info
 #define next(P) (P)->next
+#define prev(P) (P)->prev
+#define participant(P) (P)->peserta
 #define first(H) ((H).first)
 #define last(H) ((H).last)
 
-typedef struct event *adr_event;
-typedef struct peserta *adr_peserta;
+typedef struct elmEvent *adr_event;
+typedef struct elmPeserta *adr_peserta;
 
 const int EXIT = 0;
 const int ADD_EVENT = 1;
@@ -53,7 +55,9 @@ struct participants{
 void showMenu();
 void createEvents(events &events);
 adr_event createElmEvent(event event);
-void insertEvent(adr_event adrEvent);
+void insertEvent(events &events, adr_event adrEvent);
+void showEvents(events events);
+void printEvent(event event);
 
 
 #endif // LIST_H_INCLUDED
