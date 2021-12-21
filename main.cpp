@@ -9,8 +9,14 @@ int main()
     // Define the events
     events eventList;
 
+    //Define the participans
+    participants participantsList;
+
     // create the event list
     createEvents(eventList);
+
+    // create the participants list
+    createParticipants(participantsList);
 
     showMenu();
     int choose;
@@ -37,7 +43,9 @@ int main()
                 break;
             }
             case REMOVE_EVENT: {
+                adr_event removeEvent;
                 cout << "REMOVE EVENT" << endl;
+                deleteEvent(eventList,)
                 break;
             }
             case SHOW_EVENT: {
@@ -47,6 +55,44 @@ int main()
             case SHOW_PARTICIPANT: {
                 cout << "SHOW PARTICIPANT" << endl;
                 break;
+            }
+            case ADD_PESERTA: {
+                int i,jumlah_peserta;
+                int no_peserta,no_tempat_duduk;
+                string nama_peserta,email,jenis_peserta,no_telp;
+                i = 0;
+
+                cout << "Masukkan Jumlah peserta :";
+                cin >> jumlah_peserta;
+
+                while (i < jumlah_peserta){
+                    peserta new_peserta;
+                    cout << "masukkan nomor peserta :";
+                    cin >> new_peserta.no_peserta;
+                    cout << "masukkan no tempat duduk :";
+                    cin >> new_peserta.no_tempat_duduk;
+                    cout << "masukkan nama peserta :";
+                    cin >> new_peserta.nama_peserta;
+                    cout << "masukkan email : ";
+                    cin >> new_peserta.email;
+                    cout << "masukkan jenis peserta :";
+                    cin >> new_peserta.jenis_peserta;
+                    cout << "masukkan no telpon :";
+                    cin >> new_peserta.no_telp;
+                    cout << "====================="<<endl;
+                    adr_peserta AdrPeserta;
+                    AdrPeserta = createElmPeserta(new_peserta);
+                    addPeserta(participantsList, AdrPeserta);
+                    i++;
+                }
+                break;
+
+            }case SHOW_PESERTA: {
+                cout << "================"<<endl;
+                showPeserta(participantsList);
+                break;
+
+
             }
         }
         showMenu();

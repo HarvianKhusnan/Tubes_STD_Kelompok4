@@ -20,6 +20,8 @@ const int ADD_EVENT = 1;
 const int REMOVE_EVENT = 2;
 const int SHOW_EVENT = 3;
 const int SHOW_PARTICIPANT = 4;
+const int ADD_PESERTA = 5;
+const int SHOW_PESERTA = 6;
 
 struct event{
     string nama_event,tempat_pelaksanaan,tanggal_pelaksanaan,jenis_event;
@@ -56,8 +58,12 @@ void showMenu();
 void createEvents(events &events);
 adr_event createElmEvent(event event);
 void insertEvent(events &events, adr_event adrEvent);
+void deleteEvent(events &events, adr_event &adrEvent);
 void showEvents(events events);
 void printEvent(event event);
-
+void addPeserta(participants &peserta, adr_peserta adrPeserta);
+void showPeserta(participants peserta);
+adr_peserta createElmPeserta(peserta peserta);
+void createParticipants(participants &peserta);
 
 #endif // LIST_H_INCLUDED
