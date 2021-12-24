@@ -94,6 +94,15 @@ int main()
                 break;
 
 
+            }case SEARCH_EVENT: {
+                adr_event P;
+                string nama;
+                cout << "Masukkan Nama Event";
+                cin >> nama;
+                P = searchElm(eventList,nama);
+                cout << info(P).nama_event << endl;
+                break;
+
             }
         }
         showMenu();

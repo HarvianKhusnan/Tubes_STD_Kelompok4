@@ -22,7 +22,7 @@ const int SHOW_EVENT = 3;
 const int SHOW_PARTICIPANT = 4;
 const int ADD_PESERTA = 5;
 const int SHOW_PESERTA = 6;
-
+const int SEARCH_EVENT = 7;
 struct event{
     string nama_event,tempat_pelaksanaan,tanggal_pelaksanaan,jenis_event;
     int quota_maks,jumlah;
@@ -68,5 +68,6 @@ void addPeserta(participants &peserta, adr_peserta adrPeserta);
 void showPeserta(participants peserta);
 adr_peserta createElmPeserta(peserta peserta);
 void createParticipants(participants &peserta);
+adr_event searchElm(events event, string x);
 
 #endif // LIST_H_INCLUDED

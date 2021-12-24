@@ -11,6 +11,7 @@ void showMenu() {
     cout << SHOW_PARTICIPANT << ". Tampilkan peserta dari sebuah event" << endl;
     cout << ADD_PESERTA << ". Tambahkan Data Pesera" << endl;
     cout << SHOW_PESERTA << ". Tampilkan data peserta" << endl;
+    cout << SEARCH_EVENT << ". Mencari EVENT"<< endl;
     cout << EXIT << ". Keluar" << endl;
 }
 
@@ -189,5 +190,25 @@ adr_peserta createElmPeserta(peserta peserta) {
 void createParticipants(participants &peserta){
     first(peserta) = NULL;
     last(peserta) = NULL;
+
+}
+
+adr_event searchElm(events events, string x){
+    if(first(events) == NULL && last(events) == NULL) {
+        return NULL;
+    } else {
+        adr_event p = first(events);
+        while(next(p) != first(events)) {
+            if(info(p).nama_event == x && info(p).jumlah <= info(p).quota_maks) {
+                return p;
+            }
+            p = next(p);
+        }
+        if(info(p).nama_event == x && info(p).jumlah <= info(p).quota_maks){
+            return p;
+        }
+
+    }
+    return NULL;
 
 }
