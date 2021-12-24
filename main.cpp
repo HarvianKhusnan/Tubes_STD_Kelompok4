@@ -45,7 +45,8 @@ int main()
             case REMOVE_EVENT: {
                 adr_event removeEvent;
                 cout << "REMOVE EVENT" << endl;
-                deleteEvent(eventList,)
+                // deleteFirstEvent(eventList, removeEvent);
+                deleteLastEvent(eventList, removeEvent);
                 break;
             }
             case SHOW_EVENT: {

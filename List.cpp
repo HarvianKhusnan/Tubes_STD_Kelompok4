@@ -48,25 +48,63 @@ void insertEvent(events &events, adr_event adrEvent) {
     }
 }
 
-void deleteEvent(events &events, adr_event &adrEvent) {
-    adr_event adrEvent2;
+adr_event searchEvent(events events, string eventName) {
+    adr_event found = NULL;
 
-    adrEvent2 = first(events);
-    if(first(events) != next(adrEvent2)){
-        while(next(adrEvent2) != first(events)){
-            adrEvent2 = next(adrEvent2);
+    if(first(events) == NULL && last(events) == NULL) {
+        cout << "Tidak ada event yang dicari" << endl << endl;
+    } else {
+        adr_event p = first(events);
+        while(next(p) != first(events) && found == NULL) {
+            event temp = info(p);
+            if(temp.nama_event == eventName) {
+                found = p;
+            }
+            p = next(p);
         }
+        cout << "========== Event " << counter << " ==========" << endl;
+        if(info(p).nama_event == eventName) {
+            found = p;
+        }
+    }
+    return found;
+}
+
+void deleteFirstEvent(events &events, adr_event &adrEvent) {
+    if(first(events) == NULL && last(events) == NULL) {
+        cout << "Tidak ada event yang dihapus" << endl;
+    } else if(next(first(events)) == first(events)) {
+        adrEvent = first(events);
+        first(events) = NULL;
+        last(events) = NULL;
+    } else {
         adrEvent = first(events);
         first(events) = next(first(events));
-        next(adrEvent2) = first(events);
-        next(adrEvent2) = NULL;
-    }else{
-        adrEvent = first(events);
+        next(last(events)) = first(events);
+        prev(first(events)) = last(events);
         next(adrEvent) = NULL;
-        first(adrEvent) = NULL;
+        prev(adrEvent) = NULL;
     }
+}
 
+void deleteLastEvent(events &events, adr_event &adrEvent) {
+    if(first(events) == NULL && last(events) == NULL) {
+        cout << "Tidak ada event yang dihapus" << endl;
+    } else if(next(first(events)) == first(events)) {
+        adrEvent = first(events);
+        first(events) = NULL;
+        last(events) = NULL;
+    } else {
+        adrEvent = last(events);
+        last(events) = prev(last(events));
+        prev(first(events)) = last(events);
+        next(last(events)) = first(events);
+        next(adrEvent) = NULL;
+        prev(adrEvent) = NULL;
+    }
+}
 
+void deleteAfterEvent(adr_event &eventPrec, adr_event &adrEvent) {
 
 }
 
