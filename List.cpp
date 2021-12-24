@@ -11,6 +11,7 @@ void showMenu() {
     cout << SHOW_PARTICIPANT << ". Tampilkan peserta dari sebuah event" << endl;
     cout << ADD_PESERTA << ". Tambahkan Data Pesera" << endl;
     cout << SHOW_PESERTA << ". Tampilkan data peserta" << endl;
+    cout << SEARCH_EVENT << ". Mencari EVENT"<< endl;
     cout << EXIT << ". Keluar" << endl;
 }
 
@@ -48,27 +49,6 @@ void insertEvent(events &events, adr_event adrEvent) {
     }
 }
 
-void deleteEvent(events &events, adr_event &adrEvent) {
-    adr_event adrEvent2;
-
-    adrEvent2 = first(events);
-    if(first(events) != next(adrEvent2)){
-        while(next(adrEvent2) != first(events)){
-            adrEvent2 = next(adrEvent2);
-        }
-        adrEvent = first(events);
-        first(events) = next(first(events));
-        next(adrEvent2) = first(events);
-        next(adrEvent2) = NULL;
-    }else{
-        adrEvent = first(events);
-        next(adrEvent) = NULL;
-        first(adrEvent) = NULL;
-    }
-
-
-
-}
 
 void printEvent(event event) {
     cout << "Nama Event : " << event.nama_event << endl;
@@ -151,5 +131,25 @@ adr_peserta createElmPeserta(peserta peserta) {
 void createParticipants(participants &peserta){
     first(peserta) = NULL;
     last(peserta) = NULL;
+
+}
+
+adr_event searchElm(events events, string x){
+    if(first(events) == NULL && last(events) == NULL) {
+        return NULL;
+    } else {
+        adr_event p = first(events);
+        while(next(p) != first(events)) {
+            if(info(p).nama_event == x && info(p).jumlah <= info(p).quota_maks) {
+                return p;
+            }
+            p = next(p);
+        }
+        if(info(p).nama_event == x && info(p).jumlah <= info(p).quota_maks){
+            return p;
+        }
+
+    }
+    return NULL;
 
 }

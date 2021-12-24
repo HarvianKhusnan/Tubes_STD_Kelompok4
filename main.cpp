@@ -45,7 +45,7 @@ int main()
             case REMOVE_EVENT: {
                 adr_event removeEvent;
                 cout << "REMOVE EVENT" << endl;
-                deleteEvent(eventList,)
+                //deleteEvent(eventList,)
                 break;
             }
             case SHOW_EVENT: {
@@ -92,6 +92,15 @@ int main()
                 showPeserta(participantsList);
                 break;
 
+
+            }case SEARCH_EVENT: {
+                adr_event P;
+                string nama;
+                cout << "Masukkan Nama Event";
+                cin >> nama;
+                P = searchElm(eventList,nama);
+                cout << info(P).nama_event << endl;
+                break;
 
             }
         }
