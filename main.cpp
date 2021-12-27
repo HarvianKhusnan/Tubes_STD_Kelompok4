@@ -23,18 +23,39 @@ int main()
     cout << "Pilih Menu : "; cin >> choose;
     while(choose != EXIT) {
         switch(choose) {
+            case JOIN_EVENT: {
+                string eventName, participantEmail;
+                adr_event searchCurrentEvent;
+                adr_participant searchCurrentParticipant;
+                adr_event_participant newEventParticipant;
+
+                cout << "Nama event yang akan diikuti : "; cin.ignore(); getline(cin, eventName);
+                searchCurrentEvent = searchEvent(eventList, eventName);
+
+                if(searchCurrentEvent != NULL) {
+                    cout << "Email peserta yang akan diikut sertakan : "; cin >> participantEmail;
+                    searchCurrentParticipant = searchParticipant(participantsList, participantEmail);
+                    if(searchCurrentParticipant != NULL) {
+                        newEventParticipant = createElmEventParticipant(searchCurrentParticipant);
+                        joinEvent(searchCurrentEvent, newEventParticipant);
+                        cout << "Success invite participant " << participantEmail << " into " << eventName << endl;
+                    }
+                }
+                break;
+            }
+            case CANCEL_JOIN_EVENT: {
+                cout << "CANCEL JOIN EVENT" << endl;
+                break;
+            }
             case ADD_EVENT: {
                 string tanggal, bulan, tahun;
                 event newEvent;
                 adr_event newEventElm;
 
-                cout << "Nama event : "; cin >> newEvent.nama_event;
-                cout << "Jenis event : "; cin >> newEvent.jenis_event;
-                cout << "Tanggal pelaksanaan : "; cin >> tanggal;
-                cout << "Bulan pelaksanaan : "; cin >> bulan;
-                cout << "Tahun pelaksanaan : "; cin >> tahun;
-                newEvent.tanggal_pelaksanaan = tanggal + " " + bulan + " " + tahun;
-                cout << "Tempat pelaksanaan : "; cin >> newEvent.tempat_pelaksanaan;
+                cout << "Nama event : "; cin.ignore(); getline(cin, newEvent.nama_event);
+                cout << "Jenis event : "; getline(cin, newEvent.jenis_event);
+                cout << "Tanggal pelaksanaan : "; getline(cin, newEvent.tanggal_pelaksanaan);
+                cout << "Tempat pelaksanaan : "; getline(cin, newEvent.tempat_pelaksanaan);
                 cout << "Quota Maks : "; cin >> newEvent.quota_maks;
                 newEvent.jumlah = 0;
 
@@ -43,66 +64,91 @@ int main()
                 break;
             }
             case REMOVE_EVENT: {
-                adr_event removeEvent;
-                cout << "REMOVE EVENT" << endl;
-                // deleteFirstEvent(eventList, removeEvent);
-                deleteLastEvent(eventList, removeEvent);
-                break;
-            }
-            case SHOW_EVENT: {
-                showEvents(eventList);
-                break;
-            }
-            case SHOW_PARTICIPANT: {
-                cout << "SHOW PARTICIPANT" << endl;
-                break;
-            }
-            case ADD_PESERTA: {
-                int i,jumlah_peserta;
-                int no_peserta,no_tempat_duduk;
-                string nama_peserta,email,jenis_peserta,no_telp;
-                i = 0;
+                adr_event deletedEvent, searchDeletedEvent;
+                string eventName;
 
-                cout << "Masukkan Jumlah peserta :";
-                cin >> jumlah_peserta;
+                cout << "Masukkan nama event yang ingin dihapus : "; cin.ignore(); getline(cin, eventName);
+                cout << "event yang ingin dihapus : " << eventName << endl;
+                deleteEvent(eventList, eventName, deletedEvent);
 
-                while (i < jumlah_peserta){
-                    peserta new_peserta;
-                    cout << "masukkan nomor peserta :";
-                    cin >> new_peserta.no_peserta;
-                    cout << "masukkan no tempat duduk :";
-                    cin >> new_peserta.no_tempat_duduk;
-                    cout << "masukkan nama peserta :";
-                    cin >> new_peserta.nama_peserta;
-                    cout << "masukkan email : ";
-                    cin >> new_peserta.email;
-                    cout << "masukkan jenis peserta :";
-                    cin >> new_peserta.jenis_peserta;
-                    cout << "masukkan no telpon :";
-                    cin >> new_peserta.no_telp;
-                    cout << "====================="<<endl;
-                    adr_peserta AdrPeserta;
-                    AdrPeserta = createElmPeserta(new_peserta);
-                    addPeserta(participantsList, AdrPeserta);
-                    i++;
+                // confirm delete procedure by search event name again
+                searchDeletedEvent = searchEvent(eventList, eventName);
+
+                // if search result is null, delete procedure success
+                if(searchDeletedEvent == NULL) {
+                    cout << "Success delete " << eventName << endl;
                 }
                 break;
-
-            }case SHOW_PESERTA: {
-                cout << "================"<<endl;
-                showPeserta(participantsList);
+            }
+            case SHOW_AVAILABLE_EVENTS: {
+                showEvents(eventList, SHOW_ONLY_AVAILABLE);
                 break;
-
-
-            }case SEARCH_EVENT: {
-                adr_event P;
-                string nama;
-                cout << "Masukkan Nama Event";
-                cin >> nama;
-                P = searchElm(eventList,nama);
-                cout << info(P).nama_event << endl;
+            }
+            case SHOW_EVENTS_WITH_PARTICIPANT: {
+                showEvents(eventList, SHOW_ALL, true, true);
                 break;
+            }
+            case SHOW_PARTICIPANTS_IN_AN_EVENT: {
+                string eventName;
+                adr_event searchCurrentEvent;
 
+                cout << "Masukkan nama event : "; cin.ignore(); getline(cin, eventName);
+
+                searchCurrentEvent = searchEvent(eventList, eventName);
+                if(searchCurrentEvent != NULL) {
+                    showParticipantsInEvent(searchCurrentEvent);
+                }
+                break;
+            }
+            case SEARCH_PARTICIPANT_IN_AN_EVENT: {
+                string eventName, participantEmail;
+                adr_event searchCurrentEvent;
+                adr_event_participant searchCurrentEventParticipant;
+
+                cout << "Masukkan nama event : "; cin.ignore(); getline(cin, eventName);
+
+                searchCurrentEvent = searchEvent(eventList, eventName);
+                if(searchCurrentEvent != NULL) {
+                    cout << "Masukkan email peserta : "; cin >> participantEmail;
+                    searchCurrentEventParticipant = searchParticipantInEvent(searchCurrentEvent, participantEmail);
+                    if(searchCurrentEventParticipant != NULL) {
+                        cout << "Peserta dengan email " << participantEmail << " sudah terdaftar dalam event ini" << endl;
+                        printParticipant(info(info(searchCurrentEventParticipant)));
+                    }
+                }
+                break;
+            }
+            case REGISTER_PARTICIPANT: {
+                int totalParticipant;
+                participant newParticipant;
+                adr_participant newParticipantElm;
+
+                cout << "Masukkan Jumlah peserta : "; cin >> totalParticipant;
+                for(int i = 0; i < totalParticipant; i++) {
+                    int counter = i + 1;
+                    cout << "============= Peserta " << counter << " =============" << endl;
+                    cout << "masukkan nomor peserta : "; cin >> newParticipant.no_peserta;
+                    cout << "masukkan no tempat duduk : "; cin >> newParticipant.no_tempat_duduk;
+                    cout << "masukkan nama peserta : "; cin.ignore(); getline(cin, newParticipant.nama_peserta);
+                    cout << "masukkan email : "; cin >> newParticipant.email;
+                    cout << "masukkan jenis peserta : "; cin.ignore(); getline(cin, newParticipant.jenis_peserta);
+                    cout << "masukkan no telpon : "; cin >> newParticipant.no_telp;
+                    newParticipantElm = createElmParticipant(newParticipant);
+                    insertParticipant(participantsList, newParticipantElm);
+                }
+                break;
+            }
+            case REMOVE_PARTICIPANT: {
+                cout << "REMOVE PARTICIPANT" << endl;
+                break;
+            }
+            case SHOW_PARTICIPANTS: {
+                showParticipants(participantsList);
+                break;
+            }
+            case SHOW_EVENTS: {
+                showEvents(eventList, SHOW_ALL, true, false);
+                break;
             }
         }
         showMenu();
