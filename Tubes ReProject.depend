@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1641214850 source:e:\data kuliah\semester 3\struktur data\praktikum\praktikum\tubes reproject\event.cpp
+	<iostream>
+	"event.h"
+
+1641210208 e:\data kuliah\semester 3\struktur data\praktikum\praktikum\tubes reproject\event.h
+	<iostream>
+
+1641352528 source:e:\data kuliah\semester 3\struktur data\praktikum\praktikum\tubes reproject\main.cpp
+	<iostream>
+	"event.h"
+
